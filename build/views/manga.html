@@ -13,6 +13,10 @@
   ::-webkit-scrollbar { 
     display: none; 
   }
+  a.navigation {
+    text-decoration: none;
+    font-size: 60px;
+  }
   </style>
 </head>
 
@@ -20,6 +24,14 @@
   {% for img in images %}
   <p><img class="manga" src="{{img}}" /></p>
   {% endfor %}
+
+  {% if prev %}
+  <a class="navigation" href="{{prev}}">⬅️️</a>
+  {% endif %}
+
+  {% if next %}
+  <a class="navigation" href="{{next}}">➡️️</a>
+  {% endif %}
 </body>
 
 </html>
