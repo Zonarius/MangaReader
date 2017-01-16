@@ -17,3 +17,11 @@ function convertWindowsPaths(windowsPath: string) {
   return "/mnt/" + driveLetter + "/" +
     windowsPath.substr(3).replace("\\", "/");
 }
+
+export function defaultConfig(): Config {
+  return {
+    port: 8080,
+    rootPath: "G:\\Downloads\\Part 7 - Steel Ball Run (Official Color Scans)",
+    imageFileExtensions: ["png", "jpg"]
+  }
+}

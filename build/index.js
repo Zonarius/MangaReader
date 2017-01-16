@@ -4,13 +4,9 @@ const nunjucks = require("nunjucks");
 const serveIndex = require("serve-index");
 const fs = require("fs");
 const pathfs = require("path");
+const commander = require("commander");
 const util = require("./util");
-let config = {
-    port: 8080,
-    rootPath: "G:\\Downloads\\Part 7 - Steel Ball Run (Official Color Scans)",
-    imageFileExtensions: ["png", "jpg"]
-};
-main(config);
+main(parseCommandLine());
 function main(config) {
     util.prepareConfig(config);
     let app = express();
@@ -41,5 +37,28 @@ function main(config) {
     function getPath(path) {
         return config.rootPath + decodeURIComponent(path);
     }
+}
+function parseCommandLine() {
+    commander
+        .option('-c, --config <path>', 'set config path')
+        .parse(process.argv);
+    let cmdConfig, envConfig, defaultConfig = util.defaultConfig();
+    if (commander["config"]) {
+        let path = commander["config"];
+        if (!fs.existsSync(path)) {
+            throw "Could not find config file " + path;
+        }
+        if (!fs.lstatSync(path).isFile()) {
+            throw "Provided config path is not a file";
+        }
+        let fileContent = fs.readFileSync(path, "utf-8");
+        cmdConfig = JSON.parse(fileContent);
+    }
+    envConfig = {
+        rootPath: process.env.ROOTPATH,
+        port: process.env.PORT
+    };
+    console.dir(cmdConfig);
+    return Object.assign({}, defaultConfig, envConfig, cmdConfig);
 }
 //# sourceMappingURL=index.js.map

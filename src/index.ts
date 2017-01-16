@@ -3,16 +3,12 @@ import * as nunjucks from 'nunjucks';
 import * as serveIndex from 'serve-index';
 import * as fs from 'fs';
 import * as pathfs from 'path';
+import * as commander from 'commander';
 
 import * as util from './util';
 
-let config: Config = {
-  port: 8080,
-  rootPath: "G:\\Downloads\\Part 7 - Steel Ball Run (Official Color Scans)",
-  imageFileExtensions: ["png", "jpg"]
-}
+main(parseCommandLine());
 
-main(config);
 function main(config: Config) {
   util.prepareConfig(config);
   let app = express();
@@ -38,9 +34,6 @@ function main(config: Config) {
 
   app.listen(config.port, () => console.log(`listening on port ${config.port}`));
 
-
-
-
   function getMangaFiles(directory: string): string[] {
     let path = getPath(directory);
     let files = fs.readdirSync(path);
@@ -56,3 +49,33 @@ function main(config: Config) {
   }
 }
 
+function parseCommandLine() : Config {
+  commander
+    .option('-c, --config <path>', 'set config path')
+    .parse(process.argv);
+    let cmdConfig,
+      envConfig,
+      defaultConfig = util.defaultConfig();
+
+  if (commander["config"]) {
+    let path = commander["config"];
+
+    if (!fs.existsSync(path)) {
+      throw "Could not find config file " + path;
+    }
+    if (!fs.lstatSync(path).isFile()) {
+      throw "Provided config path is not a file";
+    }
+
+    let fileContent = fs.readFileSync(path, "utf-8");
+    cmdConfig = JSON.parse(fileContent);
+  }
+
+  envConfig = {
+    rootPath : process.env.ROOTPATH,
+    port : process.env.PORT
+  }
+  console.dir(cmdConfig);
+
+  return Object.assign({}, defaultConfig, envConfig, cmdConfig);
+}
