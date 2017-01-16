@@ -1,0 +1,25 @@
+{
+  "name": "Mangareader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "tsc && copyfiles -u 1 src/**/*.html build/",
+    "start": "node build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nunjucks": "^3.0.0",
+    "serve-index": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.34",
+    "@types/nunjucks": "^0.0.32",
+    "@types/serve-index": "^1.7.28",
+    "copyfiles": "^1.0.0"
+  }
+}

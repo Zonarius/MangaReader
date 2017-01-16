@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+  body {
+    text-align: center;
+    background-color: grey;
+  }
+  .manga {
+    max-width: 100%;
+  }
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
+  </style>
+</head>
+
+<body>
+  {% for img in images %}
+  <p><img class="manga" src="{{img}}" /></p>
+  {% endfor %}
+</body>
+
+</html>
