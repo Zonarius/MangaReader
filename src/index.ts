@@ -75,9 +75,6 @@ function parseCommandLine(): Config {
     rootPath: process.env.ROOTPATH,
     port: process.env.PORT
   });
-  console.dir(cmdConfig);
-  console.dir(envConfig);
-  console.dir(defaultConfig);
 
   return Object.assign({}, defaultConfig, envConfig, cmdConfig);
 }
