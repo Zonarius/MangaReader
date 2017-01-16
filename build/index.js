@@ -54,11 +54,12 @@ function parseCommandLine() {
         let fileContent = fs.readFileSync(path, "utf-8");
         cmdConfig = JSON.parse(fileContent);
     }
-    envConfig = {
+    envConfig = util.cullUndefined({
         rootPath: process.env.ROOTPATH,
         port: process.env.PORT
-    };
+    });
     console.dir(cmdConfig);
+    console.dir(envConfig);
+    console.dir(defaultConfig);
     return Object.assign({}, defaultConfig, envConfig, cmdConfig);
 }
-//# sourceMappingURL=index.js.map

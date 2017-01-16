@@ -25,3 +25,12 @@ export function defaultConfig(): Config {
     imageFileExtensions: ["png", "jpg"]
   }
 }
+
+export function cullUndefined(o: Object) : Object {
+  Object.keys(o)
+    .filter(k => typeof o[k] === 'undefined')
+    .forEach(k => {
+      delete o[k];
+    })
+  return o;
+}

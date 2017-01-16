@@ -23,4 +23,12 @@ function defaultConfig() {
     };
 }
 exports.defaultConfig = defaultConfig;
-//# sourceMappingURL=util.js.map
+function cullUndefined(o) {
+    Object.keys(o)
+        .filter(k => typeof o[k] === 'undefined')
+        .forEach(k => {
+        delete o[k];
+    });
+    return o;
+}
+exports.cullUndefined = cullUndefined;
