@@ -49,13 +49,13 @@ function main(config: Config) {
   }
 }
 
-function parseCommandLine() : Config {
+function parseCommandLine(): Config {
   commander
     .option('-c, --config <path>', 'set config path')
     .parse(process.argv);
-    let cmdConfig,
-      envConfig,
-      defaultConfig = util.defaultConfig();
+  let cmdConfig,
+    envConfig,
+    defaultConfig = util.defaultConfig();
 
   if (commander["config"]) {
     let path = commander["config"];
@@ -72,8 +72,8 @@ function parseCommandLine() : Config {
   }
 
   envConfig = {
-    rootPath : process.env.ROOTPATH,
-    port : process.env.PORT
+    rootPath: process.env.ROOTPATH,
+    port: process.env.PORT
   }
   console.dir(cmdConfig);
 
